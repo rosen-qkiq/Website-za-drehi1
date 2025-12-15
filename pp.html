@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StyleHub - Модерни Дрехи</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #e8e8e8;
+            --text-primary: #2c2c2c;
+            --text-secondary: #6b6b6b;
+            --accent: #5a5a5a;
+            --accent-hover: #3d3d3d;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --border: #d4d4d4;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #e5e5e5;
+            --text-secondary: #a3a3a3;
+            --accent: #8a8a8a;
+            --accent-hover: #b0b0b0;
+            --card-bg: #252525;
+            --shadow: rgba(0, 0, 0, 0.4);
+            --border: #404040;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: var(--card-bg);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: var(--accent);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-hover);
+            transform: rotate(180deg);
+        }
+
+        .theme-toggle svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .hero {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 4rem 2rem;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .cta-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+
+        .products {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px var(--shadow);
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.6s ease;
+            animation-fill-mode: both;
+            cursor: pointer;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        /* Removed .product-category styles as elements are removed */
+
+        .product-name {
+            font-size: 1.3rem;
+            margin: 0.5rem 0;
+            font-weight: 600;
+        }
+
+        .product-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .view-details {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .view-details:hover {
+            background: var(--accent-hover);
+            transform: scale(1.05);
+        }
+
+        /* Product Detail Page */
+        .product-detail {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 2rem;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .back-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            background: var(--accent-hover);
+            transform: translateX(-5px);
+        }
+
+        .detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 5px 30px var(--shadow);
+        }
+
+        .detail-image {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail-image img {
+            max-width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+        }
+
+        .detail-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Removed .detail-category styles */
+
+        .detail-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin: 1.5rem 0;
+        }
+
+        .detail-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .size-selector {
+            margin: 2rem 0;
+        }
+
+        .size-selector h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .size-option {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .size-option:hover, .size-option.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .add-to-cart-detail {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart-detail:hover {
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+
+        .features {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .features h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features li {
+            padding: 0.7rem 0;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .features li::before {
+            content: "✓ ";
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        footer {
+            background: var(--card-bg);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+
+            .detail-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo" onclick="showHome()">StyleHub</div>
+            <div class="nav-links">
+                <a onclick="showHome()">Начало</a>
+                <a onclick="scrollToProducts()">Продукти</a>
+                <a href="#about">За нас</a>
+                <a href="#contact">Контакти</a>
+                <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">
+                    <svg id="moonIcon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                    <svg id="sunIcon" class="hidden" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div id="homePage">
+        <section class="hero">
+            <h1>Открийте Вашия Стил</h1>
+            <p>Модерни дрехи за всеки случай. Качество, стил и комфорт в едно.</p>
+            <button class="cta-button" onclick="scrollToProducts()">Разгледай Колекцията</button>
+        </section>
+
+        <section class="products" id="products">
+            <h2 class="section-title">Нашите Продукти</h2>
+            <div class="product-grid">
+                <div class="product-card" onclick="showProduct(0)">
+                    <div class="product-image">
+                        <img src="https://pngimg.com/d/sweater_PNG71.png" alt="Сив Пуловер">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Сив Пуловер</h3>
+                        <p class="product-description">Топъл и удобен пуловер за студените дни</p>
+                        <div class="product-footer">
+                            <span class="product-price">89.99 лв</span>
+                            <button class="view-details">Детайли</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" onclick="showProduct(1)">
+                    <div class="product-image">
+                        <img src="https://img.pikbest.com/png-images/20250226/plain-black-short-sleeve-t-shirt-mockup-isolated-png-22_11558605.png!sw800" alt="Сива Тениска">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Сива Тениска</h3>
+                        <p class="product-description">Класическа тениска с кръгло деколте</p>
+                        <div class="product-footer">
+                            <span class="product-price">45.99 лв</span>
+                            <button class="view-details">Детайли</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" onclick="showProduct(2)">
+                    <div class="product-image">
+                        <img src="https://pics.clipartpng.com/Red_T_Shirt_PNG_Clip_Art-3105.png" alt="Червена Тениска">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Червена Тениска</h3>
+                        <p class="product-description">Ярка червена тениска за активни личности</p>
+                        <div class="product-footer">
+                            <span class="product-price">49.99 лв</span>
+                            <button class="view-details">Детайли</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" onclick="showProduct(3)">
+                    <div class="product-image">
+                        <img src="https://clipart-library.com/newhp/Blue_T_Shirt_PNG_Clip_Art-3104.png" alt="Синя Тениска">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Синя Тениска</h3>
+                        <p class="product-description">Свежа синя тениска от памучен материал</p>
+                        <div class="product-footer">
+                            <span class="product-price">49.99 лв</span>
+                            <button class="view-details">Детайли</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" onclick="showProduct(4)">
+                    <div class="product-image">
+                        <img src="https://i0.wp.com/condanz.com/wp-content/uploads/2024/06/Spectrum-Pants.png?fit=3502%2C3503&ssl=1" alt="Сиви Панталони">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Сиви Панталони</h3>
+                        <p class="product-description">Елегантни сиви панталони за всекидневие</p>
+                        <div class="product-footer">
+                            <span class="product-price">119.99 лв</span>
+                            <button class="view-details">Детайли</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="detailPage" class="hidden">
+        <div class="product-detail">
+            <button class="back-button" onclick="showHome()">← Назад към продукти</button>
+            <div class="detail-container">
+                <div class="detail-image">
+                    <img id="detailImg" src="" alt="">
+                </div>
+                <div class="detail-info">
+                    <h1 id="detailName"></h1>
+                    <div class="detail-price" id="detailPrice"></div>
+                    <p class="detail-description" id="detailDescription"></p>
+                    
+                    <div class="size-selector">
+                        <h3>Изберете размер:</h3>
+                        <div class="size-options">
+                            <div class="size-option" onclick="selectSize(this)">S</div>
+                            <div class="size-option active" onclick="selectSize(this)">M</div>
+                            <div class="size-option" onclick="selectSize(this)">L</div>
+                            <div class="size-option" onclick="selectSize(this)">XL</div>
+                        </div>
+                    </div>
+
+                    <button class="add-to-cart-detail" onclick="addToCartDetail()">Добави в количката</button>
+
+                    <div class="features">
+                        <h3>Характеристики:</h3>
+                        <ul id="featuresList"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 StyleHub. Всички права запазени.</p>
+        <p style="margin-top: 0.5rem; color: var(--text-secondary);">Качество и стил, който ви представя</p>
+    </footer>
+
+    <script>
+        const products = [
+            {
+                name: "Сив Пуловер",
+                price: "89.99 лв",
+                description: "Топъл и удобен пуловер за студените дни. Изработен от висококачествен памук с добавка на вълна за максимална топлина.",
+                image: "https://pngimg.com/d/sweater_PNG71.png",
+                features: ["100% памук", "Машинно пране", "Налични размери: S, M, L, XL", "Топла вълнена материя", "Подходящ за зимата"]
+            },
+            {
+                name: "Сива Тениска",
+                price: "45.99 лв",
+                description: "Класическа тениска с кръгло деколте. Перфектна за ежедневна употреба и комбинира се лесно с всяка друга дреха.",
+                image: "https://img.pikbest.com/png-images/20250226/plain-black-short-sleeve-t-shirt-mockup-isolated-png-22_11558605.png!sw800",
+                features: ["100% памук", "Къси ръкави", "Машинно пране", "Breathable материя", "Класически дизайн"]
+            },
+            {
+                name: "Червена Тениска",
+                price: "49.99 лв",
+                description: "Ярка червена тениска за активни личности. Цветът остава наситен дори след множество прания благодарение на специалната обработка на тъканта.",
+                image: "https://pics.clipartpng.com/Red_T_Shirt_PNG_Clip_Art-3105.png",
+                features: ["Ярък цвят", "Висококачествен памук", "Устойчив на избеляване", "Удобна кройка", "Налични всички размери"]
+            },
+            {
+                name: "Синя Тениска",
+                price: "49.99 лв",
+                description: "Свежа синя тениска от памучен материал. Идеална за топлите дни и спортните активности.",
+                image: "https://clipart-library.com/newhp/Blue_T_Shirt_PNG_Clip_Art-3104.png",
+                features: ["100% органичен памук", "Еко-френдли", "Лека и дишаща", "Перфектна посадка", "Универсален стил"]
+            },
+            {
+                name: "Сиви Панталони",
+                price: "119.99 лв",
+                description: "Елегантни сиви панталони за всекидневие. Комбинират стил и комфорт, подходящи както за работа, така и за свободното време.",
+                image: "https://i0.wp.com/condanz.com/wp-content/uploads/2024/06/Spectrum-Pants.png?fit=3502%2C3503&ssl=1",
+                features: ["Премиум качество", "Модерна кройка", "Удобни джобове", "Лесна поддръжка", "Елегантен вид"]
+            }
+        ];
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const moonIcon = document.getElementById('moonIcon');
+            const sunIcon = document.getElementById('sunIcon');
+            const currentTheme = html.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
+        }
+
+        function showProduct(index) {
+            const product = products[index];
+            document.getElementById('detailImg').src = product.image;
+            document.getElementById('detailName').textContent = product.name;
+            document.getElementById('detailPrice').textContent = product.price;
+            document.getElementById('detailDescription').textContent = product.description;
+            
+            const featuresList = document.getElementById('featuresList');
+            featuresList.innerHTML = '';
+            product.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.textContent = feature;
+                featuresList.appendChild(li);
+            });
+
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('detailPage').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function showHome() {
+            document.getElementById('homePage').classList.remove('hidden');
+            document.getElementById('detailPage').classList.add('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function scrollToProducts() {
+            showHome();
+            setTimeout(() => {
+                document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        function selectSize(element) {
+            document.querySelectorAll('.size-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+
+        function addToCartDetail() {
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '✓ Добавено в количката!';
+            button.style.background = '#6b6b6b';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = '';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
